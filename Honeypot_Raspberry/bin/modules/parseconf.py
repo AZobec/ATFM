@@ -1,10 +1,5 @@
 # coding: utf8
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-
-import time
-import sys
-import os
 
 def parse_configuration_file(config_file):
 	#Dictionnary Creation
@@ -12,7 +7,6 @@ def parse_configuration_file(config_file):
 
 	#Parsing the .conf into the dictionnary previously created
 	conf_file = open(config_file, "r")
-	#print(conf_file.readlines())
 	
 	for line  in conf_file:
 		if line[0]!='#':
