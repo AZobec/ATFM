@@ -1,6 +1,6 @@
 # coding: utf8
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+
 import PIL.Image
 import time
 import socket
@@ -167,7 +167,7 @@ if __name__ == '__main__':
             while 1 :
                 print("S > #### Debut de la boucle d'échange ####")
                 msgClient=connexion.recv(BUFFER)
-                testMessageClient=dechiffrement(msgClient.decode(),aes_key)
+                testMessageClient=dechiffrement(msgClient,aes_key)
                 if testMessageClient=="FIN" :
                     print("S > Fin de la connexion par le client")
                     break

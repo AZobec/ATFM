@@ -28,38 +28,38 @@ def dechiffrement_RSA(encrypted_message,private_key_client):
 
 def chiffrement(message,key):
         #On créé un nouvel objet
-	cipher = AES.new(key)
+    cipher = AES.new(key)
 
-	# avec AES le message doit être un multiple de 16
-	# si ce n'est pas le cas on le complète avec des \0
-	if (len(message) % 16) != 0:
-		n = 16 - (len(message) % 16)
-		for i in range(0, n):
-			message += '\0'
-	print(len(message))
-	# on chiffre symétriquement le contenu du fichier avec notre clé        
-	encrypted_aes_message = cipher.encrypt(message)
-	return encrypted_aes_message
+    # avec AES le message doit être un multiple de 16
+    # si ce n'est pas le cas on le complète avec des \0
+    if (len(message) % 16) != 0:
+        n = 16 - (len(message) % 16)
+        for i in range(0, n):
+            message += '\0'
+    print(len(message))
+    # on chiffre symétriquement le contenu du fichier avec notre clé        
+    encrypted_aes_message = cipher.encrypt(message)
+    return encrypted_aes_message
 
 def dechiffrement(encrypted_aes_message,key):
-        cipher = AES.new(key)
-	#on déchiffre
-	plain_text = cipher.decrypt(encrypted_aes_message)
-	#on supprime les \0
-	for i in range(0, len(plain_text)):
-		if plain_text[i] == 0:
-			plain_text = plain_text[0:i]
-			break
-	print("Voici le message chiffré: ")
-	print (plain_text)
-	return plain_text
+    cipher = AES.new(key)
+    #on déchiffre
+    plain_text = cipher.decrypt(encrypted_aes_message)
+    #on supprime les \0
+    for i in range(0, len(plain_text)):
+        if plain_text[i] == 0:
+            plain_text = plain_text[0:i]
+            break
+    print("Voici le message chiffré: ")
+    print (plain_text)
+    return plain_text
 
 def generate_key():
-	pool = randpool.RandomPool()
-	crypted_key = RSA.generate(1024, pool.get_bytes)
-	private_key_server = crypted_key
-	public_key_server = private_key_server.publickey()
-	return private_key_server
+    pool = randpool.RandomPool()
+    crypted_key = RSA.generate(1024, pool.get_bytes)
+    private_key_server = crypted_key
+    public_key_server = private_key_server.publickey()
+    return private_key_server
 
 if __name__ == '__main__':
         
@@ -120,7 +120,6 @@ if __name__ == '__main__':
         #Etape 7: Envoi de la clé AES
         aes_key = os.urandom(32)
         encrypted_aes_key = chiffrement_RSA(aes_key,public_key_server)
-        print("DEBUG : "+ encrypted_aes_key)
         print(">>> La clé a été chiffrée")
         #Envoi de la clé
         sock.send(encrypted_aes_key)
