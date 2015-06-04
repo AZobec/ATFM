@@ -33,6 +33,7 @@ def decryption(message,key):
 	return plain_text
 
 def encrypt_file(key, in_filename, out_filename=None, chunksize=64*1024):
+	#Thanks to Eli Bendersky
 	if not out_filename:
 		out_filename = in_filename + '.enc'
 
@@ -55,6 +56,7 @@ def encrypt_file(key, in_filename, out_filename=None, chunksize=64*1024):
 				outfile.write(encryptor.encrypt(chunk))
 
 def decrypt_file(key, in_filename, out_filename=None, chunksize=24*1024):
+	#Thanks to Eli Bendersky
 	if not out_filename:
 		out_filename = os.path.splitext(in_filename)[0]
 
