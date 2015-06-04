@@ -3,6 +3,9 @@
 
 import time
 import binascii
+import random
+import os
+import struct
 from Crypto.Cipher import AES
 from Crypto.Cipher import PKCS1_OAEP
 
