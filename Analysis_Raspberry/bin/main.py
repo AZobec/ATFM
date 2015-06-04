@@ -7,64 +7,23 @@ import sys
 import getpass
 import hashlib
 import os
+import imp
 import binascii
 from Crypto.Cipher import AES
 from Crypto.PublicKey import RSA
 from Crypto.Util import randpool
 from Crypto.Cipher import PKCS1_OAEP
+from modules import rsa
+from modules import aes
+from modules import parseconf
 
+file_path = os.path.dirname(os.path.realpath(__file__))
 BUFFER = 2048
-
-def dechiffrement_RSA(encrypted_message,private_key_server):
-        private_key_server = PKCS1_OAEP.new(private_key_server)
-        decrypted_message = private_key_server.decrypt(encrypted_message)
-        return decrypted_message
-
-def chiffrement_RSA(plain_text, public_key_client):
-        public_key_client = PKCS1_OAEP.new(public_key_client)
-        encrypted_message = public_key_server.encrypt(plain_text)
-        return encrypted_message
-
-def chiffrement(message,key):
-        #On créé un nouvel objet
-	cipher = AES.new(key)
-
-	# avec AES le message doit être un multiple de 16
-	# si ce n'est pas le cas on le complète avec des \0
-	if (len(message) % 16) != 0:
-		n = 16 - (len(message) % 16)
-		for i in range(0, n):
-			message += '\0'
-	print(len(message))
-	# on chiffre symétriquement le contenu du fichier avec notre clé        
-	encode = cipher.encrypt(message)
-	return encode
-
-def dechiffrement(message,key):
-        cipher = AES.new(key)
-	#on déchiffre
-	plain_text = cipher.decrypt(message)
-	#on supprime les \0
-	for i in range(0, len(plain_text)):
-		if plain_text[i] == 0:
-			plain_text = plain_text[0:i]
-			break
-	print("Voici le message chiffré: ")
-	print (plain_text)
-	return plain_text
-
-def generate_key():
-	pool = randpool.RandomPool()
-	crypted_key = RSA.generate(1024, pool.get_bytes)
-	private_key_server = crypted_key
-	public_key_server = private_key_server.publickey()
-	return private_key_server
-
 
 if __name__ == '__main__':
 
     #Génération de la paire de clé
-    private_key_server = generate_key()
+    private_key_server = rsa.generate_key()
     public_key_server = private_key_server.publickey()
     
     sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -138,13 +97,13 @@ if __name__ == '__main__':
             #Etape 7: Réception de la clé AES
             encrypted_aes_key = connexion.recv(BUFFER)
             print("S > la clé a été ecue chiffree")
-            aes_key = dechiffrement_RSA(encrypted_aes_key,private_key_server)
+            aes_key = rsa.decryption(encrypted_aes_key,private_key_server)
             print("S > la clé a été dechiffree")
             #Etape 8: Réception du hash de la CLE AES
             time.sleep(0.5)
             aes_hash = (connexion.recv(BUFFER))
             print("S > Le hash de la cle a ete recu chiffree")
-            aes_hash = dechiffrement_RSA(aes_hash,private_key_server)
+            aes_hash = rsa.decryption(aes_hash,private_key_server)
             #Etape 9: Envoi d'un AES KEY OK SERVER FINISHED
 
             if aes_hash != hashlib.sha256(aes_key).hexdigest():
@@ -166,7 +125,7 @@ if __name__ == '__main__':
             while 1 :
                 print("S > #### Debut de la boucle d'échange ####")
                 msgClient=connexion.recv(BUFFER)
-                testMessageClient=dechiffrement(msgClient,aes_key)
+                testMessageClient=aes.decryption(msgClient,aes_key)
                 if testMessageClient=="FIN" :
                     print("S > Fin de la connexion par le client")
                     break
@@ -175,7 +134,7 @@ if __name__ == '__main__':
                 if testMessageClient=="TEST":
                     print("S > TEST COMMUNICATION OK")
                     msgServer = 'TEST OK'
-                    msgServer = chiffrement(msgServer,aes_key)
+                    msgServer = aes.encryption(msgServer,aes_key)
                     connexion.send(msgServer)
                     print("S > Message de Test envoyé au client")
                 if testMessageClient == "image":
@@ -185,7 +144,7 @@ if __name__ == '__main__':
                             connexion.send(public_key_server.exportKey('DER'))
                             #on rÃ©ceptionne la clÃ© pour dÃ©chiffrer
                             key=connexion.recv(BUFFER)
-                            key = dechiffrement_RSA(key,private_key_server,public_key_client)
+                            key = rsa.decryption(key,private_key_server,public_key_client)
                             #on rÃ©ceptionne l'image
                             string_to_image(testMessageClient,connexion)
                             #on rÃ©cupÃ¨re le message chiffrÃ© et on le dÃ©chiffre

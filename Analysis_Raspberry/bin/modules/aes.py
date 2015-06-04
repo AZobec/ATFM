@@ -14,7 +14,7 @@ from Crypto.Util import randpool
 from Crypto.Cipher import PKCS1_OAEP
 
 def encryption(message,key):
-        #On créé un nouvel objet
+    #On créé un nouvel objet
 	cipher = AES.new(key)
 
 	# avec AES le message doit être un multiple de 16
