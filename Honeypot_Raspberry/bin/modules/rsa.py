@@ -2,13 +2,8 @@
 #!/usr/bin/env python
 
 import time
-import socket
 import sys
-import getpass
-import hashlib
-import os
 import binascii
-from Crypto.Cipher import AES
 from Crypto.PublicKey import RSA
 from Crypto.Util import randpool
 from Crypto.Cipher import PKCS1_OAEP
