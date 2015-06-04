@@ -1,7 +1,6 @@
 # coding: utf8
 #!/usr/bin/env python
 
-import PIL.Image
 import time
 import socket
 import sys
