@@ -19,5 +19,5 @@ def parse_configuration_file(config_file):
 	return configurations
 	
 if __name__ == '__main__':
-	configurations = parse_configuration_file("../../etc/HoneypotSender.conf")
+	configurations = parse_configuration_file("../../etc/Analysis_Sender.conf")
 	print(configurations)

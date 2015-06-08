@@ -22,19 +22,23 @@ BUFFER = 2048
 
 if __name__ == '__main__':
 
+    #Récupération des options présentes dans le fichier de configuration  
+    configurations = parseconf.parse_configuration_file("../../etc/Analysis_Sender.conf")
+
     #Génération de la paire de clé
     private_key_server = rsa.generate_key()
     public_key_server = private_key_server.publickey()
     
+    #Création de la socket
     sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    HOST='127.0.0.1'
-    PORT=2020
+    HOST=configurations{ListeningIP}
+    PORT=configurations{IncomingPort}
 
 
     testMessageClient=""
 
-    #CrÃ©ation d'une socket avec la famille IP + TCP
+    #Création d'une socket avec la famille IP + TCP
     MySocket=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     #Liaison Socket avec adresse+PORT
