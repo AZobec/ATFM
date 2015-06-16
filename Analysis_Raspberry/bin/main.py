@@ -20,6 +20,17 @@ from modules import parseconf
 file_path = os.path.dirname(os.path.realpath(__file__))
 BUFFER = 2048
 
+def string_to_image(encoded_string,connexion):
+    fp = open("crypted_.png",'wb')
+    while True:
+        strng = connexion.recv(1024)
+        if strng=="transfert fini".encode():
+            break
+        fp.write(strng)
+        
+    fp.close()
+    print("Data received successfully")
+
 if __name__ == '__main__':
 
     #Récupération des options présentes dans le fichier de configuration  

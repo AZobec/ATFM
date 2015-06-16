@@ -19,6 +19,19 @@ from modules import parseconf
 
 BUFFER = 2048
 
+def concatene_image(socket):
+    #On va ouvrir l'image et l'envoyer directement byte par byte
+    file_name = open("crypted.png",'rb')
+    
+    while True:
+        strng = file_name.readline()
+        if not strng:
+            break
+        socket.send(strng)
+        
+    file_name.close()
+    socket.send("transfert fini".encode())
+
 if __name__ == '__main__':
     
     #Get .conf file datas  
