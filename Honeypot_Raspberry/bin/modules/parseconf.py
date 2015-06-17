@@ -12,7 +12,7 @@ def parse_configuration_file(config_file):
 		if line[0]!='#':
 			if "=" in line:
 				option, value= line.split('=',1)
-				configurations[option[:-1]]=value[:-2]
+				configurations[option[:-1]]=value[1:-1]
 			
 	#Close the configuration file
 	conf_file.close()

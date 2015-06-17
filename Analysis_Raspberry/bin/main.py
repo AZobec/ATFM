@@ -34,7 +34,7 @@ def string_to_image(encoded_string,connexion):
 if __name__ == '__main__':
 
     #Récupération des options présentes dans le fichier de configuration  
-    configurations = parseconf.parse_configuration_file("../../etc/Analysis_Sender.conf")
+    configurations = parseconf.parse_configuration_file("../etc/Analysis_Sender.conf")
 
     #Génération de la paire de clé
     private_key_server = rsa.generate_key()
@@ -42,9 +42,9 @@ if __name__ == '__main__':
     
     #Création de la socket
     sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    HOST=configurations{ListeningIP}
-    PORT=configurations{IncomingPort}
+    print(configurations)
+    HOST=configurations["ListeningIP"]
+    PORT=int(configurations["IncomingPort"])
 
 
     testMessageClient=""

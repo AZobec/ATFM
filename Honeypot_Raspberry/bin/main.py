@@ -35,7 +35,7 @@ def concatene_image(socket):
 if __name__ == '__main__':
     
     #Get .conf file datas  
-    configurations = parse_configuration_file("../../etc/HoneypotSender.conf")
+    configurations = parseconf.parse_configuration_file("../etc/HoneypotSender.conf")
 
     #Generating RSA keys....
     private_key_client = rsa.generate_key()
@@ -44,8 +44,8 @@ if __name__ == '__main__':
     #Creating the socket
     sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    HOST=configurations{DestinationIP}
-    PORT=configurations{DestinationPort}
+    HOST=configurations["DestinationIP"]
+    PORT=int(configurations["DestinationPort"])
 
     try:
             #Connect to the server, watched block, exceptions are managed
