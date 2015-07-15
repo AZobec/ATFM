@@ -1,0 +1,8 @@
+Honeypot_Raspberry/bin/modules/__init__.pyc
+*.pyc
+Analysis_Raspberry/bin/modules/aes.pyc
+*.pyc
+Analysis_Raspberry/bin/modules/rsa.pyc
+*.pyc
+*.pyc
+Analysis_Raspberry/bin/modules/aes.pyc
