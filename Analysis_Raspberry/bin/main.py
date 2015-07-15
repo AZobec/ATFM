@@ -20,8 +20,6 @@ from modules import communication
 
 file_path = os.path.dirname(os.path.realpath(__file__))
 
-
-
 if __name__ == '__main__':
 
     #Récupération des options présentes dans le fichier de configuration  
