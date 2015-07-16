@@ -19,8 +19,8 @@ from modules import parseconf
 
 BUFFER = 2048
 
-def receive_file(encoded_string,connexion):
-    fp = open("crypted_.png",'wb')
+def receive_file(file_name,connexion):
+    fp = open(file_name,'wb')
     while True:
         strng = connexion.recv(1024)
         if strng=="transfert fini".encode():
@@ -150,6 +150,11 @@ def with_honeypot(configurations):
                 print("S > #### Debut de la boucle d'échange ####")
                 msgClient=connexion.recv(BUFFER)
                 testMessageClient=aes.decryption(msgClient,aes_key)
+                 if testMessageClient == "Incoming_file":
+                    msgClient=connexion.recv(BUFFER)
+                    file_name=aes.decryption(msgClient,aes_key)
+                    receive_file(configurations["DataLocation"]+"/"+file_name,connexion)
+                    ############## TOOOOO FINIIIIISH ##############
                 if testMessageClient=="FIN" :
                     print("S > Fin de la connexion par le client")
                     break
