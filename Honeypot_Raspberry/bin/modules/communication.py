@@ -16,8 +16,6 @@ from Crypto.Cipher import PKCS1_OAEP
 from modules import rsa
 from modules import aes
 from modules import parseconf
-from os import listdir
-from os.path import isfile, join
 
 BUFFER = 2048
 
@@ -133,36 +131,20 @@ def with_analysis(configurations):
             print(">>> Début de la communication chiffrée")
     #on a la boucle de communication habituelle
     while 1:
-
-        #Ce qu'on veut faire : prendre touis les fichiers dans un répertoire, et les envoyer
-        for data_file in listdir(configurations["DataLocation"]):
-            if isfile(join(configurations["DataLocation"]),data_file):
-                #là on est sûr qie c'est un file dans les DataLocation
-
-                # 1 : on chiffre le fichier
-                aes.encrypt_file(key, configurations["DataLocation"]+"/"+data_file)
-                toclientmessage = aes.encryption("Incoming_file",aes_key)
+            toclientmessage = input("Message:")
+            if toclientmessage == "FIN":
+                toclientmessage = aes.encryption(toclientmessage,aes_key)
                 sock.send(toclientmessage)
-                sleep(0.1)
-                toclientmessage = aes.encryption(data_file,aes_key)
+            elif toclientmessage == "TEST":
+                toclientmessage = aes.encryption(toclientmessage,aes_key)
                 sock.send(toclientmessage)
-                sleep(0.1)
-                send_file(sock,configurations["DataLocation"]+"/"+data_file)
-############## TOOOOO FINIIIIISH ##############
-        
-        if toclientmessage == "FIN":
-            toclientmessage = aes.encryption(toclientmessage,aes_key)
-            sock.send(toclientmessage)
-        elif toclientmessage == "TEST":
-            toclientmessage = aes.encryption(toclientmessage,aes_key)
-            sock.send(toclientmessage)
-        msgServer=sock.recv(BUFFER)
-        testMessageServer=aes.decryption(msgServer.decode(),aes_key)
-        if testMessageServer=="FIN":
-            break
-        elif testMessageServer == "TEST OK":
-            sock.send((aes.encryption('FIN'),aes_key).encode())
-            break
+            msgServer=sock.recv(BUFFER)
+            testMessageServer=aes.decryption(msgServer.decode(),aes_key)
+            if testMessageServer=="FIN":
+                break
+            elif testMessageServer == "TEST OK":
+                sock.send((aes.encryption('FIN'),aes_key).encode())
+                break
 
     #Fin while (1) connexion
     print (">>> Connexion interrompue proprement par le serveur")
