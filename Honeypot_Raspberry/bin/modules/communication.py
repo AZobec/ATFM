@@ -142,21 +142,30 @@ def with_analysis(configurations):
                 # 1 : on chiffre le fichier
                 aes.encrypt_file(key, configurations["DataLocation"]+"/"+data_file)
                 toclientmessage = aes.encryption("Incoming_file",aes_key)
+                sock.send(toclientmessage)
                 sleep(0.1)
+                # 2 : on envoie le nom du fichier
                 toclientmessage = aes.encryption(data_file,aes_key)
-            if toclientmessage == "FIN":
-                toclientmessage = aes.encryption(toclientmessage,aes_key)
                 sock.send(toclientmessage)
-            elif toclientmessage == "TEST":
-                toclientmessage = aes.encryption(toclientmessage,aes_key)
-                sock.send(toclientmessage)
-            msgServer=sock.recv(BUFFER)
-            testMessageServer=aes.decryption(msgServer.decode(),aes_key)
-            if testMessageServer=="FIN":
-                break
-            elif testMessageServer == "TEST OK":
-                sock.send((aes.encryption('FIN'),aes_key).encode())
-                break
+                sleep(0.1)
+                send_file(sock,configurations["DataLocation"]+"/"+data_file)
+                #
+                sleep(0.2)
+                ############## TOOOOO FINIIIIISH ##############
+        
+        if toclientmessage == "FIN":
+            toclientmessage = aes.encryption(toclientmessage,aes_key)
+            sock.send(toclientmessage)
+        elif toclientmessage == "TEST":
+            toclientmessage = aes.encryption(toclientmessage,aes_key)
+            sock.send(toclientmessage)
+        msgServer=sock.recv(BUFFER)
+        testMessageServer=aes.decryption(msgServer.decode(),aes_key)
+        if testMessageServer=="FIN":
+            break
+        elif testMessageServer == "TEST OK":
+            sock.send((aes.encryption('FIN'),aes_key).encode())
+            break
 
     #Fin while (1) connexion ok
     print (">>> Connexion interrompue proprement par le serveur")
