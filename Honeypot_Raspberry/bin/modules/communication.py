@@ -146,7 +146,7 @@ def with_analysis(configurations):
                 sock.send((aes.encryption('FIN'),aes_key).encode())
                 break
 
-    #Fin while (1) connexion
+    #Fin while (1) connexion ok
     print (">>> Connexion interrompue proprement par le serveur")
     sock.close()
     sys.exit()
