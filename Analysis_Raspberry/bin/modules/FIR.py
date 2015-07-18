@@ -3,17 +3,18 @@
 
 import requests
 
+
 def create_event(configurations):
 
-    url="http://"+"127.0.0.1"+":8000/events/new/"
+    url="http://"+configurations["FirIP"]+":8000/events/new/"
     data= {
         'csrfmiddlewaretoken': 'JrDSAkAfHh5kwA7UERzchoDI0RVR10pZ',
-        'subject': 'test ARNAUD ZOBEC',
+        'subject': 'test ARNAUD ZOBEC 2',
         'category': '1',
         'status': 'O',
         'detection': '2',
         'severity': '1',
-        'date': '17/07/2015 16:01:04',
+        'date': '18/07/2015 16:01:04',
         'actor': '',
         'plan': '',
         'confidentiality': '1',
@@ -26,8 +27,21 @@ def create_event(configurations):
 
     cookies2 = dict (sessionid = 'umd71fiphl7hq15sr3cvee9x1ljjql9w',
         csrftoken = 'JrDSAkAfHh5kwA7UERzchoDI0RVR10pZ' )
-    r = requests.post(url, data=data, cookies=cookies2, headers=headers)
-    print r.status_code
+
+    try:
+        r = requests.post(url, data=data, cookies=cookies2, headers=headers)
+        print r.status_code
+        if r.status_code == requests.codes.ok:
+            print("Event Created")
+        else:
+            print("Erreur lors de la création (cookie?)")
+    except requests.exceptions.Timeout:
+        print(">>> Requete TimeOut")
+    except requests.exceptions.TooManyRedirects:
+        print(">>> TooManyRedirects")
+    except requests.exceptions.RequestException:
+        pass
+
 
 if __name__ == '__main__':
     configurations = parse_configuration_file("../../etc/Analysis_Sender.conf")

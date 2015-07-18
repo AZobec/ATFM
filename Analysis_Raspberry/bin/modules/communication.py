@@ -150,10 +150,10 @@ def with_honeypot(configurations):
                 print("S > #### Debut de la boucle d'échange ####")
                 msgClient=connexion.recv(BUFFER)
                 testMessageClient=aes.decryption(msgClient,aes_key)
-                 if testMessageClient == "Incoming_file":
-                    msgClient=connexion.recv(BUFFER)
-                    file_name=aes.decryption(msgClient,aes_key)
-                    receive_file(configurations["DataLocation"]+"/"+file_name,connexion)
+                if testMessageClient == "Incoming_file":
+                        msgClient=connexion.recv(BUFFER)
+                        file_name=aes.decryption(msgClient,aes_key)
+                        receive_file(configurations["DataLocation"]+"/"+file_name,connexion)
                     ############## TOOOOO FINIIIIISH ##############
                 if testMessageClient=="FIN" :
                     print("S > Fin de la connexion par le client")
