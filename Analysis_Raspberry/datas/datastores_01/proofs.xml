@@ -1,0 +1,22 @@
+<preuves>
+	<preuve type="tentative de connexion">
+		<ip>192.168.1.12</ip>
+	 	<port>80</port>
+	 	<data>GET /</data>
+	 </preuve>
+	 <preuve type="tentative de connexion">
+		<ip>192.168.1.13</ip>
+	 	<port>80</port>
+	 	<data>GET /</data>
+	 </preuve>
+	 <preuve type="NON">
+		<ip>192.168.1.14</ip>
+	 	<port>80</port>
+	 	<data>GET /</data>
+	 </preuve>
+	 <preuve type="tentative de connexion">
+		<ip>192.168.1.15</ip>
+	 	<port>80</port>
+	 	<data>GET /</data>
+	 </preuve>
+</preuves>
