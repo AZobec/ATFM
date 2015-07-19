@@ -19,7 +19,6 @@ def honeypot_proofs(configurations,proof_file):
 
 		#'18/07/2015 16:01:04'
 		date = strftime("%d/%m/%Y %H:%M:%S")
-		print ("Date: "+date)
 			#IF NIVEAU 3 : ON ENVOIE
 		if preuve.find("score").text == "3":
 			datas = {'csrfmiddlewaretoken' : 'JrDSAkAfHh5kwA7UERzchoDI0RVR10pZ',
@@ -34,8 +33,7 @@ def honeypot_proofs(configurations,proof_file):
 			        'confidentiality' : '1',
 			        'description' : "<p>DATAS : <p><p>"+preuve.find("data").text+"</p>",
 			        }
-			print("Preuve niveau 3 :!!")
-			print ("on affiche :")
+			print("S > Preuve de niveau 3 reçue : Création de ticket")
 			FIR.create_event_from_xml(configurations,datas)
 
 			#IF NIVEAU 4 : ON ENVOIE AUSSI

@@ -23,8 +23,6 @@ BUFFER = 2048
 
 def receive_file(file_name,connexion):
     fp = open(file_name,'wb')
-    print("CREATION FICHIER")
-    print(file_name)
     while True:
         strng = connexion.recv(1024)
         if strng=="transfert fini".encode():
@@ -32,7 +30,7 @@ def receive_file(file_name,connexion):
         fp.write(strng)
         
     fp.close()
-    print("Data received successfully")
+    print("S > Data received successfully")
 
 def send_file(socket,_file_):
     #On va ouvrir le fichier et l'envoyer directement nbit à bit
@@ -162,13 +160,11 @@ def with_honeypot(configurations):
                 msgClient=connexion.recv(BUFFER)
                 testMessageClient=aes.decryption(msgClient,aes_key)
                 if "Incoming_file" in testMessageClient:
-                    print("COUCOU")
                     msgClient=connexion.recv(BUFFER)
                     file_name=aes.decryption(msgClient,aes_key)
-                    print("Nom du fichier:"+file_name)
-                    receive_file(configurations["DataLocation"]+"/"+file_name,connexion)
+                    receive_file(configurations["DataLocation"]+"/encrypted_datas/"+file_name,connexion)
                     #On déchiffre le fichier
-                    aes.decrypt_file(aes_key,configurations["DataLocation"]+"/"+file_name)
+                    aes.decrypt_file(aes_key,configurations["DataLocation"]+"/encrypted_datas/"+file_name,configurations["DataLocation"]+"/"+file_name[:-3])
                     ############## TOOOOO FINIIIIISH ##############
                 if "FIN_COMMUNICATION" in testMessageClient:
                     print("S > Fin de la connexion par le client")
@@ -200,7 +196,7 @@ def with_honeypot(configurations):
             
             # fermeture de la connexion
             connexion.send(b"FIN")
-            print("S > connexion interompue par le client!!!!")
+            print("S > connexion interompue proprement par le client.")
             connexion.close()
             break           
     MySocket.close()

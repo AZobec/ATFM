@@ -30,7 +30,6 @@ def receive_file(encoded_string,connexion):
         fp.write(strng)
         
     fp.close()
-    print("Data received successfully")
 
 def send_file(socket,_file_):
     #On va ouvrir le fichier et l'envoyer directement bit par bit
@@ -44,6 +43,7 @@ def send_file(socket,_file_):
         
     file_.close()
     socket.send("transfert fini".encode())
+    print(">>> Data transfered successfully")
 
 def with_analysis(configurations):
  #Generating RSA keys....
@@ -142,19 +142,13 @@ def with_analysis(configurations):
                 # 1 : on chiffre le fichier
                 aes.encrypt_file(aes_key, configurations["DataLocation"]+"/"+data_file)
                 toclientmessage = aes.encryption("Incoming_file",aes_key)
-                print(aes.decryption(toclientmessage,aes_key))
                 sock.send(toclientmessage)
-                print("Incoming file send")
                 time.sleep(0.5)
                 # 2 : on envoie le nom du fichier
                 toclientmessage = aes.encryption(data_file+".enc",aes_key)
-                
                 sock.send(toclientmessage)
-                print("Nom de fichier envoyé:")
-                print(aes.decryption(toclientmessage,aes_key))
                 time.sleep(0.5)
                 send_file(sock,configurations["DataLocation"]+"/"+data_file+".enc")
-                print("Fichier envoyé")
                 time.sleep(0.5)
                 ############## TOOOOO FINIIIIISH ##############
 

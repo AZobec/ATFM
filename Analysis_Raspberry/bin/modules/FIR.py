@@ -29,9 +29,8 @@ def create_event(configurations):
 
     try:
         r = requests.post(url, data=data, cookies=cookies2, headers=headers)
-        print r.status_code
         if r.status_code == requests.codes.ok:
-            print("Event Created")
+            print("S > Event Created")
         else:
             print("Erreur lors de la création (cookie?)")
     except requests.exceptions.Timeout:
@@ -55,9 +54,9 @@ def create_event_from_xml(configurations,datas):
 
     try:
         r = requests.post(url, data=datas, cookies=cookies2, headers=headers)
-        print r.status_code
+
         if r.status_code == requests.codes.ok:
-            print("Event Created")
+            print("S > Event Created")
         else:
             print("Erreur lors de la création (cookie?)")
     except requests.exceptions.Timeout:
