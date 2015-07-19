@@ -26,7 +26,7 @@ def encryption(message,key):
 def decryption(message,key):
 	cipher = AES.new(key)
 	#on déchiffre
-	plain_text = cipher.decrypt(message)
+	plain_text = cipher.decrypt(message).replace('\0', '')
 	#on supprime les \0
 	for i in range(0, len(plain_text)):
 		if plain_text[i] == 0:

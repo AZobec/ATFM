@@ -33,7 +33,7 @@ def receive_file(encoded_string,connexion):
     print("Data received successfully")
 
 def send_file(socket,_file_):
-    #On va ouvrir l'image et l'envoyer directement byte par byte
+    #On va ouvrir le fichier et l'envoyer directement bit par bit
     file_ = open(_file_,'rb')
     
     while True:
@@ -42,7 +42,7 @@ def send_file(socket,_file_):
             break
         socket.send(strng)
         
-    file_name.close()
+    file_.close()
     socket.send("transfert fini".encode())
 
 def with_analysis(configurations):
@@ -132,26 +132,36 @@ def with_analysis(configurations):
             print(">>> Le Server a terminé le pseudoTLS Handshake")
             print(">>> Début de la communication chiffrée")
     #on a la boucle de communication habituelle
-    while 1:
-            
-        #Ce qu'on veut faire : prendre touis les fichiers dans un répertoire, et les envoyer
-        for data_file in listdir(configurations["DataLocation"]):
-            if isfile(join(configurations["DataLocation"]),data_file):
+
+     #Ce qu'on veut faire : prendre touis les fichiers dans un répertoire, et les envoyer
+    for data_file in listdir(configurations["DataLocation"]):
+        if isfile(join(configurations["DataLocation"],data_file)):
+            if not ".enc" in data_file:
                 #là on est sûr qie c'est un file dans les DataLocation
 
                 # 1 : on chiffre le fichier
-                aes.encrypt_file(key, configurations["DataLocation"]+"/"+data_file)
+                aes.encrypt_file(aes_key, configurations["DataLocation"]+"/"+data_file)
                 toclientmessage = aes.encryption("Incoming_file",aes_key)
+                print(aes.decryption(toclientmessage,aes_key))
                 sock.send(toclientmessage)
-                sleep(0.1)
+                print("Incoming file send")
+                time.sleep(0.5)
                 # 2 : on envoie le nom du fichier
-                toclientmessage = aes.encryption(data_file,aes_key)
+                toclientmessage = aes.encryption(data_file+".enc",aes_key)
+                
                 sock.send(toclientmessage)
-                sleep(0.1)
-                send_file(sock,configurations["DataLocation"]+"/"+data_file)
-                #
-                sleep(0.2)
+                print("Nom de fichier envoyé:")
+                print(aes.decryption(toclientmessage,aes_key))
+                time.sleep(0.5)
+                send_file(sock,configurations["DataLocation"]+"/"+data_file+".enc")
+                print("Fichier envoyé")
+                time.sleep(0.5)
                 ############## TOOOOO FINIIIIISH ##############
+
+
+    while 1:
+            
+
         
         if toclientmessage == "FIN":
             toclientmessage = aes.encryption(toclientmessage,aes_key)

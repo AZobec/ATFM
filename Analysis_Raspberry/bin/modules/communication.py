@@ -23,6 +23,8 @@ BUFFER = 2048
 
 def receive_file(file_name,connexion):
     fp = open(file_name,'wb')
+    print("CREATION FICHIER")
+    print(file_name)
     while True:
         strng = connexion.recv(1024)
         if strng=="transfert fini".encode():
@@ -33,7 +35,7 @@ def receive_file(file_name,connexion):
     print("Data received successfully")
 
 def send_file(socket,_file_):
-    #On va ouvrir l'image et l'envoyer directement byte par byte
+    #On va ouvrir le fichier et l'envoyer directement nbit à bit
     file_ = open(_file_,'rb')
     
     while True:
@@ -148,14 +150,43 @@ def with_honeypot(configurations):
 
             #Ensuite : communication
                 # boucle d'échange avec le client
+
+            #message_test = connexion.recv(BUFFER)
+            #message_test = aes.decryption(message_test,aes_key)
+            #print("Message de Test :"+message_test)
+            #if "Incoming_file" in  message_test:
+            #    print("HELLO")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             while 1 :
                 print("S > #### Debut de la boucle d'échange ####")
                 msgClient=connexion.recv(BUFFER)
                 testMessageClient=aes.decryption(msgClient,aes_key)
-                if testMessageClient == "Incoming_file":
-                        msgClient=connexion.recv(BUFFER)
-                        file_name=aes.decryption(msgClient,aes_key)
-                        receive_file(configurations["DataLocation"]+"/"+file_name,connexion)
+                if "Incoming_file" in testMessageClient:
+                    print("COUCOU")
+                    msgClient=connexion.recv(BUFFER)
+                    file_name=aes.decryption(msgClient,aes_key)
+                    print("Nom du fichier:"+file_name)
+                    receive_file(configurations["DataLocation"]+"/"+file_name,connexion)
+                    #On déchiffre le fichier
+                    aes.decrypt_file(aes_key,configurations["DataLocation"]+"/"+file_name)
                     ############## TOOOOO FINIIIIISH ##############
                 if testMessageClient=="FIN" :
                     print("S > Fin de la connexion par le client")
