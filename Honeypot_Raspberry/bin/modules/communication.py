@@ -158,26 +158,8 @@ def with_analysis(configurations):
                 time.sleep(0.5)
                 ############## TOOOOO FINIIIIISH ##############
 
-
-    while 1:
-            
-
-        
-        if toclientmessage == "FIN":
-            toclientmessage = aes.encryption(toclientmessage,aes_key)
-            sock.send(toclientmessage)
-        elif toclientmessage == "TEST":
-            toclientmessage = aes.encryption(toclientmessage,aes_key)
-            sock.send(toclientmessage)
-        msgServer=sock.recv(BUFFER)
-        testMessageServer=aes.decryption(msgServer.decode(),aes_key)
-        if testMessageServer=="FIN":
-            break
-        elif testMessageServer == "TEST OK":
-            sock.send((aes.encryption('FIN'),aes_key).encode())
-            break
-
-    #Fin while (1) connexion ok
+    toclientmessage = aes.encryption("FIN_COMMUNICATION",aes_key)
+    sock.send(toclientmessage)
     print (">>> Connexion interrompue proprement par le serveur")
     sock.close()
     sys.exit()

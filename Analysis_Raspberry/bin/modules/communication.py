@@ -157,24 +157,6 @@ def with_honeypot(configurations):
             #if "Incoming_file" in  message_test:
             #    print("HELLO")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             while 1 :
                 print("S > #### Debut de la boucle d'échange ####")
                 msgClient=connexion.recv(BUFFER)
@@ -188,7 +170,7 @@ def with_honeypot(configurations):
                     #On déchiffre le fichier
                     aes.decrypt_file(aes_key,configurations["DataLocation"]+"/"+file_name)
                     ############## TOOOOO FINIIIIISH ##############
-                if testMessageClient=="FIN" :
+                if "FIN_COMMUNICATION" in testMessageClient:
                     print("S > Fin de la connexion par le client")
                     break
                 elif testMessageClient=="WAIT":
@@ -219,5 +201,6 @@ def with_honeypot(configurations):
             # fermeture de la connexion
             connexion.send(b"FIN")
             print("S > connexion interompue par le client!!!!")
-            connexion.close()           
+            connexion.close()
+            break           
     MySocket.close()
