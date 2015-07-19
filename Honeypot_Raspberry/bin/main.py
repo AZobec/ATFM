@@ -25,4 +25,4 @@ if __name__ == '__main__':
     #Get .conf file datas  
     configurations = parseconf.parse_configuration_file("../etc/HoneypotSender.conf")
     communication.with_analysis(configurations)
-   
+    exit(0)

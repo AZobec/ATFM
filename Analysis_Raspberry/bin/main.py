@@ -32,3 +32,5 @@ if __name__ == '__main__':
     
     #On parse les datas et on en créé des events
     parsexml.honeypot_proofs(configurations,"proofs.xml")
+
+    exit(0)
