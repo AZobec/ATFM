@@ -12,7 +12,7 @@
 		 	<data>GET /</data>
 		 	<score>2</score>
 		 </preuve>
-		 <preuve type="NON">
+		 <preuve type="tentative d'intrusion">
 			<ip>192.168.1.14</ip>
 		 	<port>80</port>
 		 	<data>GET /</data>
@@ -21,7 +21,7 @@
 		 <preuve type="tentative de connexion">
 			<ip>192.168.1.15</ip>
 		 	<port>80</port>
-		 	<data>GET /</data>
+		 	<data>NIVEAU 3 TEST</data>
 		 	<score>3</score>
 		 </preuve>
 	</preuves>

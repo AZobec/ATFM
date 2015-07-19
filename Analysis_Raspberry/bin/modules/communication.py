@@ -17,6 +17,8 @@ from modules import rsa
 from modules import aes
 from modules import parseconf
 
+file_path = os.path.dirname(os.path.realpath(__file__))
+
 BUFFER = 2048
 
 def receive_file(file_name,connexion):
