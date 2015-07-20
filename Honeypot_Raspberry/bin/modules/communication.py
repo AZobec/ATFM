@@ -96,6 +96,7 @@ def with_analysis(configurations):
     else:
             #Step 6: Send certificat validation(ok ou nok)
             if hash_public_key_server.decode()==hashlib.sha256(public_key_server.exportKey('DER')).hexdigest():
+                    print("LE HASH EST OK")
                     sock.send(b'Certificat OK')
                     print(">>> Le certificat a été \"vérifié\"")
 

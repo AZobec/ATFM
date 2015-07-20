@@ -100,7 +100,7 @@ def with_honeypot(configurations):
             print("S > clef publique envoyée")
 
 
-
+            time.sleep(0.5)
             #Etape 4: Envoi du hash de la clé publique
             connexion.send(hashlib.sha256(public_key_server.exportKey('DER')).hexdigest())
             print("S > Hash clef publique envoyé")
@@ -164,7 +164,7 @@ def with_honeypot(configurations):
                     file_name=aes.decryption(msgClient,aes_key)
                     receive_file(configurations["DataLocation"]+"/encrypted_datas/"+file_name,connexion)
                     #On déchiffre le fichier
-                    aes.decrypt_file(aes_key,configurations["DataLocation"]+"/encrypted_datas/"+file_name,configurations["DataLocation"]+"/"+file_name[:-3])
+                    aes.decrypt_file(aes_key,configurations["DataLocation"]+"/encrypted_datas/"+file_name,configurations["DataLocation"]+"/"+file_name[:-4])
                     ############## TOOOOO FINIIIIISH ##############
                 if "FIN_COMMUNICATION" in testMessageClient:
                     print("S > Fin de la connexion par le client")
