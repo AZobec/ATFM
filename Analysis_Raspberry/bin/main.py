@@ -31,21 +31,24 @@ if __name__ == '__main__':
     configurations = parseconf.parse_configuration_file("../etc/Analysis_Sender.conf")
     
     #On récupère les fichiers
-    communication.with_honeypot(configurations)
+    #communication.with_honeypot(configurations)
     #On parse les datas et on en créé des events
     try:
-        #parseioc.bash_history(configurations,"bash_history.ioc")
+        parseioc.bash_history(configurations,"bash_history.ioc")
     except:
         print("S > Pas de fichier bash_history")
     try :
-        #parseioc.bash_history(configurations,"bash_history_root.ioc")
+        parseioc.bash_history(configurations,"bash_history_root.ioc")
     except:
         print("S > Pas de fichier bash_history_root")
     try:
         parseioc.w_ioc(configurations,"w.ioc")
     except :
         print("S > Pas de fichier w.ioc")
-        print(configurations["DataLocation"]+"w.ioc")
+    try:
+    	parseioc.last(configurations,"last.ioc")
+    except:
+    	print("S > Pas de fichier last.ioc")
     parsexml.honeypot_proofs(configurations,"proofs.xml")
 
     exit(0)

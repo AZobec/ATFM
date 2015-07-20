@@ -19,4 +19,4 @@ sudo chown pi:pi ~/ATFM/Honeypot_Raspberry/datas/*
 echo ">>> Clean some important files"
 sudo truncate -s 0 /root/.bash_history
 sudo truncate -s 0 ~/.bash_history
-
+sudo truncate -s 0 /var/log/wtmp

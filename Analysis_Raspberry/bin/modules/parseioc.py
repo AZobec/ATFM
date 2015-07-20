@@ -9,7 +9,7 @@ def bash_history(configurations,file_name):
 	bash_history = open(configurations["DataLocation"]+file_name,"rb")
 	t = bash_history.read()
 	if t != "":
-		proof_bash=dict(type = "ioc", ip = configurations["ListeningIP"], port = "none", data = t, score = "3")
+		proof_bash=dict(type = "ioc", ip = configurations["ListeningIP"], port = "none", data = t, score = "3", name ="bash_history.ioc")
 		parsexml.add_proof(configurations,"proofs.xml",proof_bash)
 		#ip 
 		#port 
@@ -31,7 +31,19 @@ def w_ioc(configurations,file_name):
 	if proof == "ALERT":
 		w_ioc = open(configurations["DataLocation"]+file_name,"rb")
 		w_ioc_t = w_ioc.read()
-		proof_w = dict(type = "ioc", ip = configurations["ListeningIP"], port = "none", data = w_ioc_t, score = "3")
-		print("On ajoute au XML?")
+		proof_w = dict(type = "ioc", ip = configurations["ListeningIP"], port = "none", data = w_ioc_t, score = "3", name = "w.ioc")
 		parsexml.add_proof(configurations,"proofs.xml",proof_w)
 		w_ioc.close()
+
+def last(configurations,file_name):
+	last = open(configurations["DataLocation"]+file_name,"rb")
+	proof = ""
+	for line in last.readlines():
+		if "root" in line:
+			proof = "ALERT"
+	last.close()
+	last = open(configurations["DataLocation"]+file_name,"rb")
+	last_t = last.read()
+	proof_last = dict(type = "ioc", ip = configurations["ListeningIP"], port = "none", data = last_t, score = "3", name = "last.ioc")
+	parsexml.add_proof(configurations,"proofs.xml",proof_last)
+	last.close()

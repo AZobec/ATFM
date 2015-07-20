@@ -39,7 +39,7 @@ def honeypot_proofs(configurations,proof_file):
 		if preuve.find("score").text == "3":
 			if preuve.get("type") == "ioc":
 				datas = {'csrfmiddlewaretoken' : 'JrDSAkAfHh5kwA7UERzchoDI0RVR10pZ',
-				        'subject' : preuve.get("type"),
+				        'subject' : preuve.get("type")+" "+preuve.find("name").text,
 				        'category' : '18',
 				        'status' : 'O',
 				        'detection' : '2',
@@ -89,6 +89,7 @@ def add_proof(configurations,proof_file,proof_datas):
 	data.text = proof_datas["data"]
 	score = etree.SubElement(preuve, "score")
 	score.text = proof_datas["score"]
-	print (code)
+	name = etree.SubElement(preuve, "name")
+	name.text = proof_datas["name"]
 	etree.ElementTree(root).write(configurations["DataLocation"]+"proofs.xml", pretty_print=True)
 	#print(etree.tostring(preuve, pretty_print=True))
