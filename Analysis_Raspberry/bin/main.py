@@ -31,7 +31,7 @@ if __name__ == '__main__':
     configurations = parseconf.parse_configuration_file("../etc/Analysis_Sender.conf")
     
     #On récupère les fichiers
-    #communication.with_honeypot(configurations)
+    communication.with_honeypot(configurations)
     #On parse les datas et on en créé des events
     try:
         parseioc.bash_history(configurations,"bash_history.ioc")

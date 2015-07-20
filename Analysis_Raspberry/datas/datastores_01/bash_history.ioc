@@ -1,0 +1,77 @@
+uname -a
+nano /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf 
+exit
+ls
+dmesg
+df -h
+cd /dev
+ls
+cd sdc1
+ls
+cd /mnt
+ls
+cd ../
+dmesg
+fdisk -l
+ls
+cd /media
+ls
+cd arnaud/
+ls
+cd ARNO/
+ls
+cd ../
+cd Ubuntu\ 15.04\ amd64/
+ls
+cd ../
+ls
+cd ../
+umount /media/arnaud/
+df
+umount /media/arnaud/U
+umount /media/arnaud/ARNO 
+ls
+dd bs=4M
+ls
+parted
+dd bs=4M
+dd bs=4M if=/home/arnaud/debian-8.0.0-amd64-CD-1.iso of=/dev/sdc1 && sync
+ls
+cd /media/
+ls
+cd arnaud/
+ls
+cd ../
+cd arnaud/
+ls
+cd NONO/
+ls
+cd ../
+ls
+cd ../
+shutdown -h now
+df -h
+dmesg
+ls
+cd /media/
+ms
+ls
+cd arnaud/
+ls
+cd DEBIAN/
+ls
+cd ../
+umount /media/arnaud/DEBIAN 
+ls!
+dd bs=4M if=/home/arnaud/debian-8.0.0-amd64-CD-1.iso of=/dev/sdc
+dd bs=4M if=/home/arnaud/debian-8.0.0-amd64-CD-1.iso of=/dev/sdc && sync
+ls
+dd bs=4M if=/home/arnaud/debian-8.0.0-amd64-CD-1.iso of=/dev/sdc && sync
+ls
+cd Debian\ 8.0.0\ amd64\ 1/
+ls
+cd ../
+shutdown -r now
+exit
+su postgres
+exit

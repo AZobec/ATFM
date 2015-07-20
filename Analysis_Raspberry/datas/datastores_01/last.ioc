@@ -1,0 +1,11 @@
+reboot   system boot  3.18.7-v7+       Fri Jun  5 10:04 - 10:09  (00:05)    
+pi       pts/0        :0.0             Mon Feb 16 14:12 - 10:03 (108+19:51) 
+pi       tty1                          Mon Feb 16 14:10 - down  (108+19:53) 
+reboot   system boot  3.18.7-v7+       Mon Feb 16 14:10 - 10:03 (108+19:53) 
+pi       pts/0        :0.0             Mon Feb 16 14:08 - 14:09  (00:00)    
+pi       tty1                          Mon Feb 16 14:04 - down   (00:05)    
+root     tty1                          Mon Feb 16 14:02 - 14:04  (00:01)    
+reboot   system boot  3.18.7-v7+       Mon Feb 16 14:02 - 14:09  (00:07)    
+
+wtmp begins Mon Feb 16 14:02:44 2015
+
