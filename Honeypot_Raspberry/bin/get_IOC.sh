@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo rm -rf ~/ATFM/Honeypot_Raspberry/datas/*.ioc*
+
 echo ">>> Get all IOC Files"
 
 sudo last > ~/ATFM/Honeypot_Raspberry/datas/last.ioc
