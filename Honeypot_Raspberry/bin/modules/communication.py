@@ -85,7 +85,7 @@ def with_analysis(configurations):
             print(">>> Réception de la clé publique")
             #Step 4: receive public key's hash
             hash_public_key_server = sock.recv(BUFFER)
-                    
+            print(">>> Clé publique reçue")        
     #Compare hashs after the end of Server Hello
     #Step 5: Receive Server Hello Done
     if sock.recv(BUFFER)!=b'Server Hello done':
@@ -139,9 +139,15 @@ def with_analysis(configurations):
         if isfile(join(configurations["DataLocation"],data_file)):
             if not ".enc" in data_file:
                 #là on est sûr qie c'est un file dans les DataLocation
-
+                time.sleep(5)
                 # 1 : on chiffre le fichier
                 aes.encrypt_file(aes_key, configurations["DataLocation"]+"/"+data_file)
+                print("Fichier chiffré")
+                try:
+                    aes.decrypt_file(aes_key, configurations["DataLocation"]+"/"+data_file+".enc")
+                    print("Fichier OK pour le déchiffrement")
+                except:
+                    print("Fichier NOK pour le déchiffrement")
                 toclientmessage = aes.encryption("Incoming_file",aes_key)
                 sock.send(toclientmessage)
                 time.sleep(0.5)
@@ -150,7 +156,7 @@ def with_analysis(configurations):
                 sock.send(toclientmessage)
                 time.sleep(0.5)
                 send_file(sock,configurations["DataLocation"]+"/"+data_file+".enc")
-                time.sleep(0.5)
+                time.sleep(1)
                 ############## TOOOOO FINIIIIISH ##############
 
     toclientmessage = aes.encryption("FIN_COMMUNICATION",aes_key)

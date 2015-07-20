@@ -16,16 +16,19 @@ from Crypto.Cipher import PKCS1_OAEP
 from modules import rsa
 from modules import aes
 from modules import parseconf
+from os import listdir
+from os.path import isfile, join
 
 file_path = os.path.dirname(os.path.realpath(__file__))
 
 BUFFER = 2048
 
 def receive_file(file_name,connexion):
+    print("S > On reçoit un fichier")
     fp = open(file_name,'wb')
     while True:
         strng = connexion.recv(1024)
-        if strng=="transfert fini".encode():
+        if "transfert fini".encode() in strng:
             break
         fp.write(strng)
         
@@ -104,7 +107,7 @@ def with_honeypot(configurations):
             #Etape 4: Envoi du hash de la clé publique
             connexion.send(hashlib.sha256(public_key_server.exportKey('DER')).hexdigest())
             print("S > Hash clef publique envoyé")
-
+            time.sleep(2)
             
             #Etape 5: Server Hello Done
             connexion.send(b'Server Hello done')
@@ -164,7 +167,7 @@ def with_honeypot(configurations):
                     file_name=aes.decryption(msgClient,aes_key)
                     receive_file(configurations["DataLocation"]+"/encrypted_datas/"+file_name,connexion)
                     #On déchiffre le fichier
-                    aes.decrypt_file(aes_key,configurations["DataLocation"]+"/encrypted_datas/"+file_name,configurations["DataLocation"]+"/"+file_name[:-4])
+                    #aes.decrypt_file(aes_key,configurations["DataLocation"]+"/encrypted_datas/"+file_name,configurations["DataLocation"]+"/"+file_name[:-4])
                     ############## TOOOOO FINIIIIISH ##############
                 if "FIN_COMMUNICATION" in testMessageClient:
                     print("S > Fin de la connexion par le client")
@@ -200,3 +203,12 @@ def with_honeypot(configurations):
             connexion.close()
             break           
     MySocket.close()
+    print("S > Fermeture de la communication")
+    print("S > On déchiffre maintenant les données")
+    for data_file in listdir(configurations["DataLocation"]+"/encrypted_datas/"):
+        print("S > Déchiffrement de: "+data_file)
+        if isfile(join(configurations["DataLocation"]+"/encrypted_datas/",data_file)):
+            try:
+                aes.decrypt_file(aes_key,configurations["DataLocation"]+"/encrypted_datas/"+data_file,configurations["DataLocation"]+"/"+data_file[:-4])
+            except:
+                print("Fail sur ce fichier")

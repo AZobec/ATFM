@@ -19,6 +19,8 @@ from modules import parseconf
 from modules import communication
 from modules import FIR
 from modules import parsexml
+from os import listdir
+from os.path import isfile, join
 
 file_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -29,8 +31,7 @@ if __name__ == '__main__':
     
     #On récupère les fichiers
     communication.with_honeypot(configurations)
-    
     #On parse les datas et on en créé des events
-    parsexml.honeypot_proofs(configurations,"proofs.xml")
+    #parsexml.honeypot_proofs(configurations,"proofs.xml")
 
     exit(0)
