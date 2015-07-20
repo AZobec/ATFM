@@ -42,6 +42,7 @@ def send_file(socket,_file_):
         socket.send(strng)
         
     file_.close()
+    time.sleep(0.5)
     socket.send("transfert fini".encode())
     print(">>> Data transfered successfully")
 

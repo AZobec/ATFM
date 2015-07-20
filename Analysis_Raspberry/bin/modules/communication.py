@@ -28,7 +28,7 @@ def receive_file(file_name,connexion):
     fp = open(file_name,'wb')
     while True:
         strng = connexion.recv(1024)
-        if "transfert fini".encode() in strng:
+        if strng == "transfert fini".encode() :
             break
         fp.write(strng)
         
