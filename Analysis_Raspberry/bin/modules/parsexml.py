@@ -40,3 +40,34 @@ def honeypot_proofs(configurations,proof_file):
 
 
 #ID  for THREATINTEL is 18
+
+def add_proof(configurations,proof_file,proof_datas):
+	#preuve = etree.Element("preuve")
+	#preuve.set("type", "ioc")
+	#ip = etree.SubElement(preuve,"ip")
+	#ip.text = proof_datas["ip"]
+	#port = etree.SubElement(preuve, "port")
+	#port.text = proof_datas["port"]
+	#data = etree.SubElement(preuve, "data")
+	#data.text = proof_datas["data"]
+	#score = etree.SubElement(preuve, "score")
+	#score.text = proof_datas["score"]
+
+
+	XML = (configurations["DataLocation"]+"proofs.xml")
+	tree = etree.parse(XML)
+	root = tree.getroot()
+	code = root.find("preuves")
+	preuve = etree.SubElement(code, "preuve")
+	preuve.set("type", "ioc")
+	ip = etree.SubElement(preuve,"ip")
+	ip.text = proof_datas["ip"]
+	port = etree.SubElement(preuve, "port")
+	port.text = proof_datas["port"]
+	data = etree.SubElement(preuve, "data")
+	data.text = proof_datas["data"]
+	score = etree.SubElement(preuve, "score")
+	score.text = proof_datas["score"]
+	print (code)
+	etree.ElementTree(root).write(configurations["DataLocation"]+"proofs_2.xml", pretty_print=True)
+	#print(etree.tostring(preuve, pretty_print=True))

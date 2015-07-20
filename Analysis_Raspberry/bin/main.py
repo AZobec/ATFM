@@ -19,6 +19,7 @@ from modules import parseconf
 from modules import communication
 from modules import FIR
 from modules import parsexml
+from modules import parseioc
 from os import listdir
 from os.path import isfile, join
 
@@ -30,8 +31,16 @@ if __name__ == '__main__':
     configurations = parseconf.parse_configuration_file("../etc/Analysis_Sender.conf")
     
     #On récupère les fichiers
-    communication.with_honeypot(configurations)
+    #communication.with_honeypot(configurations)
     #On parse les datas et on en créé des events
-    #parsexml.honeypot_proofs(configurations,"proofs.xml")
+    try:
+		#parseioc.bash_history(configurations,"bash_history.ioc")
+	except:
+		print("S > Pas de fichier bash_history")
+    try :
+    	#parseioc.bash_history(configurations,"bash_history_root.ioc")
+    except:
+    	print("S > Pas de fichier bash_history_root")
+    parsexml.honeypot_proofs(configurations,"proofs.xml")
 
     exit(0)
